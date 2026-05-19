@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Janes Sport Gym — Tu lugar seguro para entrenar · Arenys de Mar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        neon: '#ccff00',
+        'neon-dim': '#a8d400',
+        'neon-glow': 'rgba(204,255,0,0.15)',
+        'neon-glow-strong': 'rgba(204,255,0,0.3)',
+        dark: '#060606',
+        'dark-2': '#0d0d0d',
+        'dark-3': '#111111',
+        'dark-4': '#1a1a1a',
+        'dark-5': '#222222',
+      },
+      fontFamily: {
+        display: ['Bebas Neue', 'sans-serif'],
+        body: ['Poppins', 'sans-serif'],
+      },
+    }
+  }
+}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: #060606; font-family: 'Poppins', sans-serif; color: #fff; overflow-x: hidden; cursor: none; }
+
+  /* CUSTOM CURSOR */
+  .cursor-dot { width: 8px; height: 8px; background: #ccff00; border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s ease; }
+  .cursor-ring { width: 36px; height: 36px; border: 1.5px solid rgba(204,255,0,0.6); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.15s ease; }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.5; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #0d0d0d; }
+  ::-webkit-scrollbar-thumb { background: #ccff00; border-radius: 2px; }
+
+  /* ========================================================================= */
+  /* 🔥 LOGO PRO INTEGRATION - TRANSPARENT PNG 🔥                              */
+  /* ========================================================================= */
+  .logo-wrapper { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+  .logo-main { 
+    height: 52px; 
+    width: auto; 
+    object-fit: contain; 
+    position: relative; 
+    z-index: 10; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    mix-blend-mode: screen;
+    filter: invert(1) contrast(2) brightness(1.3);
+  }
+  .logo-wrapper:hover .logo-main { transform: scale(1.05) translateY(-1px); mix-blend-mode: screen; filter: invert(1) contrast(2) brightness(1.5) drop-shadow(0 4px 16px rgba(204, 255, 0, 0.4)); }
+  .logo-glow { position: absolute; inset: 0; background: #ccff00; filter: blur(15px); opacity: 0; transition: opacity 0.4s ease; border-radius: 50%; z-index: 1; }
+  .logo-wrapper:hover .logo-glow { opacity: 0.15; }
+
+  .footer-logo { 
+    height: 36px; 
+    width: auto; 
+    object-fit: contain; 
+    opacity: 0.55; 
+    transition: all 0.4s ease; 
+    mix-blend-mode: screen;
+    filter: invert(1) brightness(0.9);
+  }
+  .footer-logo:hover { opacity: 1; filter: invert(1) brightness(1.1) drop-shadow(0 0 10px rgba(204, 255, 0, 0.2)); transform: scale(1.05); }
+  /* ========================================================================= */
+
+  /* HERO */
+  .hero-bg { background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=80') center/cover no-repeat; position: relative; }
+  .hero-bg::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(6,6,6,0.97) 0%, rgba(6,6,6,0.88) 50%, rgba(6,6,6,0.75) 100%); }
+  .hero-bg::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 200px; background: linear-gradient(to bottom, transparent, #060606); }
+
+  .stripe-bg { background-image: repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(204,255,0,0.015) 20px, rgba(204,255,0,0.015) 21px); }
+  .section-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #ccff00; }
+  .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: #ccff00; }
+
+  .navbar-blur { backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); background: rgba(6,6,6,0.85); border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+  .btn-primary { background: #ccff00; color: #060606; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 14px 32px; position: relative; overflow: hidden; transition: all 0.3s ease; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); }
+  .btn-primary::before { content: ''; position: absolute; inset: 0; background: #fff; transform: translateX(-101%); transition: transform 0.3s ease; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(204,255,0,0.35); }
+  .btn-primary:hover::before { transform: translateX(0); opacity: 0.1; }
+
+  .btn-secondary { background: transparent; color: #ccff00; font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 13px 32px; border: 1px solid rgba(204,255,0,0.6); transition: all 0.3s ease; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); }
+  .btn-secondary:hover { background: rgba(204,255,0,0.08); border-color: #ccff00; transform: translateY(-2px); }
+
+  .card-dark { background: #111111; border: 1px solid rgba(255,255,255,0.06); transition: all 0.4s ease; position: relative; overflow: hidden; }
+  .card-dark::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(204,255,0,0.03) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s ease; }
+  .card-dark:hover { border-color: rgba(204,255,0,0.25); transform: translateY(-4px); }
+  .card-dark:hover::before { opacity: 1; }
+
+  .disc-card { position: relative; overflow: hidden; aspect-ratio: 3/4; cursor: pointer; transition: transform 0.4s ease; }
+  .disc-card:hover { transform: scale(1.02); }
+  .disc-card-img { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.6s ease; }
+  .disc-card:hover .disc-card-img { transform: scale(1.08); }
+  .disc-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,6,6,0.97) 0%, rgba(6,6,6,0.5) 50%, rgba(6,6,6,0.1) 100%); transition: background 0.4s ease; }
+  .disc-card:hover .disc-card-overlay { background: linear-gradient(to top, rgba(6,6,6,0.99) 0%, rgba(6,6,6,0.7) 60%, rgba(6,6,6,0.2) 100%); }
+  .disc-card-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 24px; transform: translateY(8px); transition: transform 0.4s ease; }
+  .disc-card:hover .disc-card-content { transform: translateY(0); }
+  .disc-card-desc { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.4s ease; opacity: 0; font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+  .disc-card:hover .disc-card-desc { max-height: 80px; opacity: 1; }
+
+  .testimonial-card { background: #111111; border: 1px solid rgba(255,255,255,0.07); padding: 32px; position: relative; transition: all 0.4s ease; }
+  .testimonial-card.featured { border-color: rgba(204,255,0,0.4); box-shadow: 0 0 30px rgba(204,255,0,0.08); }
+  .testimonial-card:hover { transform: translateY(-4px); }
+
+  .marquee-wrapper { overflow: hidden; }
+  .marquee-track { display: flex; gap: 0; animation: marquee 20s linear infinite; width: max-content; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-item { display: flex; align-items: center; gap: 16px; padding: 0 40px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.15em; color: rgba(255,255,255,0.25); white-space: nowrap; }
+  .marquee-item .dot { width: 6px; height: 6px; background: #ccff00; border-radius: 50%; }
+
+  .stat-item { position: relative; padding: 32px 24px; border-right: 1px solid rgba(255,255,255,0.06); text-align: center; }
+  .stat-item:last-child { border-right: none; }
+
+  .whatsapp-float { position: fixed; bottom: 28px; right: 28px; z-index: 1000; display: flex; align-items: center; gap: 12px; background: #25D366; color: #fff; font-size: 13px; font-weight: 600; padding: 14px 20px; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: all 0.3s ease; overflow: hidden; max-width: 220px; }
+  .whatsapp-float:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(37,211,102,0.5); background: #20bd5c; }
+  .whatsapp-float i { font-size: 20px; flex-shrink: 0; }
+  .whatsapp-text { overflow: hidden; white-space: nowrap; transition: max-width 0.4s ease; max-width: 130px; }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor-dot, .cursor-ring { display: none; }
+    .whatsapp-float .whatsapp-text { display: none; }
+    .whatsapp-float { padding: 14px 16px; }
+  }
+
+  .hr-neon { height: 1px; background: linear-gradient(to right, transparent, rgba(204,255,0,0.4), transparent); }
+  .nav-link { position: relative; font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.65); transition: color 0.3s; padding-bottom: 2px; }
+  .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: #ccff00; transition: width 0.3s ease; }
+  .nav-link:hover { color: #ccff00; }
+  .nav-link:hover::after { width: 100%; }
+
+  .team-card { background: #111; border: 1px solid rgba(255,255,255,0.06); padding: 24px; display: flex; align-items: flex-start; gap: 16px; transition: all 0.3s ease; }
+  .team-card:hover { border-color: rgba(204,255,0,0.25); }
+  .team-icon { width: 44px; height: 44px; flex-shrink: 0; background: rgba(204,255,0,0.1); display: flex; align-items: center; justify-content: center; color: #ccff00; font-size: 18px; }
+
+  .pill-tag { display: inline-block; background: rgba(204,255,0,0.1); color: #ccff00; font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 12px; border: 1px solid rgba(204,255,0,0.25); }
+
+  .contact-box { background: #111; border: 1px solid rgba(204,255,0,0.2); box-shadow: 0 0 60px rgba(204,255,0,0.05), inset 0 0 30px rgba(204,255,0,0.02); }
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<a href="https://wa.me/34931757092?text=Hola%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20Janes%20Sport%20Gym" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <span class="whatsapp-text">¡Escríbenos!</span>
+</a>
+
+<nav class="navbar-blur fixed top-0 left-0 right-0 z-50" id="navbar">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    
+    <a href="#inicio" class="logo-wrapper" aria-label="Volver al inicio">
+      <div class="logo-glow"></div>
+      <img src="Gemini_Generated_Image_vn4bwavn4bwavn4b.png" alt="Janes Sport Gym" class="logo-main" loading="eager"/>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#inicio" class="nav-link">Inicio</a>
+      <a href="#disciplinas" class="nav-link">Disciplinas</a>
+      <a href="#entrenamientos" class="nav-link">Entrenamientos</a>
+      <a href="#equipo" class="nav-link">Equipo</a>
+      <a href="#opiniones" class="nav-link">Opiniones</a>
+    </div>
+
+    <div class="hidden md:flex items-center gap-4">
+      <a href="https://wa.me/34931757092" target="_blank" class="flex items-center gap-2 text-white/60 hover:text-white text-sm font-medium transition-colors" style="letter-spacing:0.03em;">
+        <i class="fab fa-whatsapp" style="color:#25D366; font-size:16px;"></i> WhatsApp
+      </a>
+      <a href="#contacto" class="btn-primary inline-block text-center no-underline" style="font-size:12px; padding:12px 24px;">Prueba un día</a>
+    </div>
+
+    <button id="menuToggle" class="md:hidden text-white/70 hover:text-neon text-xl p-2" aria-label="Menú">
+      <i class="fas fa-bars" id="menuIcon"></i>
+    </button>
+  </div>
+
+  <div id="mobileMenu" class="hidden md:hidden border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-4">
+      <a href="#inicio" class="nav-link text-sm">Inicio</a>
+      <a href="#disciplinas" class="nav-link text-sm">Disciplinas</a>
+      <a href="#entrenamientos" class="nav-link text-sm">Entrenamientos</a>
+      <a href="#equipo" class="nav-link text-sm">Equipo</a>
+      <a href="#opiniones" class="nav-link text-sm">Opiniones</a>
+      <div class="hr-neon my-2"></div>
+      <a href="https://wa.me/34931757092" target="_blank" class="flex items-center gap-2 text-sm text-white/70">
+        <i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp
+      </a>
+      <a href="#contacto" class="btn-primary inline-block text-center">Prueba un día</a>
+    </div>
+  </div>
+</nav>
+
+<section id="inicio" class="hero-bg min-h-screen flex items-center relative" style="padding-top: 80px;">
+  <div class="max-w-7xl mx-auto px-6 py-24 relative z-10 w-full">
+    <div class="max-w-4xl">
+      <div class="reveal reveal-delay-1 section-tag mb-6">Arenys de Mar · Maresme</div>
+      <h1 class="reveal reveal-delay-2" style="font-family:'Bebas Neue',sans-serif; font-size: clamp(60px,9vw,120px); line-height: 0.92; letter-spacing: 0.01em; margin-bottom: 32px;">
+        MUCHO MÁS<br/> QUE UN<br/> <span style="color:#ccff00;" class="neon-text-glow">GIMNASIO.</span>
+      </h1>
+      <p class="reveal reveal-delay-3 text-white/55 max-w-xl mb-10" style="font-size:clamp(14px,1.6vw,17px); line-height:1.75; font-weight:300;">
+        Un entorno familiar, sin juicios y sin agobios. Desde CrossFit y Hyrox hasta musculación, BJJ y Pilates. Entrena con los mejores del Maresme y logra tu mejor versión.
+      </p>
+      <div class="reveal reveal-delay-4 flex flex-wrap gap-4">
+        <a href="#contacto" class="btn-primary inline-block no-underline"><i class="fas fa-bolt mr-2"></i>Empieza tu cambio hoy</a>
+        <a href="#disciplinas" class="btn-secondary inline-block no-underline">Ver clases <i class="fas fa-arrow-right ml-2"></i></a>
+      </div>
+    </div>
+
+    <div class="reveal mt-20 grid grid-cols-3 max-w-lg border border-white/8" style="background:rgba(0,0,0,0.5); backdrop-filter:blur(10px);">
+      <div class="stat-item"><div style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:#ccff00; line-height:1;">+500</div><div style="font-size:10px; letter-spacing:0.1em; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-top:4px;">Miembros</div></div>
+      <div class="stat-item"><div style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:#ccff00; line-height:1;">4.8★</div><div style="font-size:10px; letter-spacing:0.1em; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-top:4px;">Valoración</div></div>
+      <div class="stat-item"><div style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:#ccff00; line-height:1;">7AM</div><div style="font-size:10px; letter-spacing:0.1em; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-top:4px;">Apertura</div></div>
+    </div>
+  </div>
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 text-white/30" style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase;">
+    <span>Scroll</span><div style="width:1px; height:40px; background:linear-gradient(to bottom, rgba(204,255,0,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite;"></div>
+  </div>
+</section>
+
+<div style="background:#0a0a0a; border-top:1px solid rgba(255,255,255,0.05); border-bottom:1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="flex items-center gap-5">
+        <div style="width:48px; height:48px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i class="fab fa-google" style="font-size:24px; background:linear-gradient(135deg,#4285f4,#ea4335,#fbbc04,#34a853); -webkit-background-clip:text; -webkit-text-fill-color:transparent;"></i>
+        </div>
+        <div>
+          <div style="font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:4px;">Google Reviews</div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-family:'Bebas Neue',sans-serif; font-size:32px; color:#ccff00; line-height:1;">4.8</span>
+            <div>
+              <div style="display:flex; gap:2px; margin-bottom:3px;">
+                <i class="fas fa-star" style="color:#ccff00; font-size:13px;"></i><i class="fas fa-star" style="color:#ccff00; font-size:13px;"></i><i class="fas fa-star" style="color:#ccff00; font-size:13px;"></i><i class="fas fa-star" style="color:#ccff00; font-size:13px;"></i><i class="fas fa-star-half-alt" style="color:#ccff00; font-size:13px;"></i>
+              </div>
+              <div style="font-size:11px; color:rgba(255,255,255,0.35);">Basado en +80 reseñas reales</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-0 divide-x" style="border:1px solid rgba(255,255,255,0.07);">
+        <div style="padding:16px 28px; text-align:center;"><div style="font-family:'Bebas Neue',sans-serif; font-size:26px; color:#fff; line-height:1;">98%</div><div style="font-size:10px; letter-spacing:0.1em; color:rgba(255,255,255,0.35); text-transform:uppercase; margin-top:3px;">Recomiendan</div></div>
+        <div style="padding:16px 28px; text-align:center; border-color:rgba(255,255,255,0.07);"><div style="font-family:'Bebas Neue',sans-serif; font-size:26px; color:#fff; line-height:1;">+80</div><div style="font-size:10px; letter-spacing:0.1em; color:rgba(255,255,255,0.35); text-transform:uppercase; margin-top:3px;">Reseñas</div></div>
+        <div style="padding:16px 28px; text-align:center; border-color:rgba(255,255,255,0.07);"><div style="font-family:'Bebas Neue',sans-serif; font-size:26px; color:#ccff00; line-height:1;">★★★★★</div><div style="font-size:10px; letter-spacing:0.1em; color:rgba(255,255,255,0.35); text-transform:uppercase; margin-top:3px;">Puntuación</div></div>
+      </div>
+      <a href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-3 no-underline" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); padding:12px 20px; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.6); transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(204,255,0,0.4)';this.style.color='#ccff00'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.6)'"><i class="fab fa-google" style="font-size:14px;"></i> Ver todas las reseñas <i class="fas fa-arrow-right" style="font-size:10px;"></i></a>
+    </div>
+  </div>
+</div>
+
+<div class="py-5 border-y border-white/5 stripe-bg overflow-hidden">
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <div class="marquee-item"><span class="dot"></span>CROSSFIT</div><div class="marquee-item"><span class="dot"></span>HYROX</div><div class="marquee-item"><span class="dot"></span>BJJ</div><div class="marquee-item"><span class="dot"></span>PILATES</div><div class="marquee-item"><span class="dot"></span>TAEKWONDO</div><div class="marquee-item"><span class="dot"></span>MUSCULACIÓN</div><div class="marquee-item"><span class="dot"></span>ENTRENAMIENTO PERSONAL</div><div class="marquee-item"><span class="dot"></span>COMUNIDAD</div><div class="marquee-item"><span class="dot"></span>FAMILIA</div>
+      <div class="marquee-item"><span class="dot"></span>CROSSFIT</div><div class="marquee-item"><span class="dot"></span>HYROX</div><div class="marquee-item"><span class="dot"></span>BJJ</div><div class="marquee-item"><span class="dot"></span>PILATES</div><div class="marquee-item"><span class="dot"></span>TAEKWONDO</div><div class="marquee-item"><span class="dot"></span>MUSCULACIÓN</div><div class="marquee-item"><span class="dot"></span>ENTRENAMIENTO PERSONAL</div><div class="marquee-item"><span class="dot"></span>COMUNIDAD</div><div class="marquee-item"><span class="dot"></span>FAMILIA</div>
+    </div>
+  </div>
+</div>
+
+<section id="nosotros" class="py-28 stripe-bg" style="background-color:#0d0d0d;">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 items-start mb-20">
+      <div>
+        <div class="reveal section-tag mb-6">Por qué elegirnos</div>
+        <h2 class="reveal" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,6vw,80px); line-height:0.92; letter-spacing:0.01em;">AQUÍ NO ERES<br/>UN NÚMERO,<br/><span style="color:#ccff00;">ERES FAMILIA.</span></h2>
+      </div>
+      <div class="reveal flex flex-col justify-end" style="padding-top:20px;">
+        <p class="text-white/50 text-base leading-relaxed mb-8" style="font-weight:300;">Olvídate de los gimnasios masificados donde nadie te hace caso. Hemos creado un espacio donde te sentirás en casa desde el primer día. Un lugar donde cada miembro importa.</p>
+        <a href="#contacto" class="btn-primary inline-block self-start no-underline">Únete ahora</a>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-px" style="background: rgba(255,255,255,0.05);">
+      <div class="card-dark p-10 reveal">
+        <div style="width:52px; height:52px; background:rgba(204,255,0,0.08); display:flex; align-items:center; justify-content:center; margin-bottom:24px;"><i class="fas fa-heart" style="color:#ccff00; font-size:20px;"></i></div>
+        <div class="pill-tag mb-4">Ambiente</div>
+        <h3 style="font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:0.03em; margin-bottom:12px; color:#fff;">Cero juicios.<br/>100% Apoyo.</h3>
+        <p class="text-white/45 text-sm leading-relaxed" style="font-weight:300;">Seas principiante o atleta avanzado, aquí todo el mundo te ayuda y te motiva. Nuestros clientes lo dicen: este es tu lugar seguro.</p>
+      </div>
+      <div class="card-dark p-10 reveal reveal-delay-1">
+        <div style="width:52px; height:52px; background:rgba(204,255,0,0.08); display:flex; align-items:center; justify-content:center; margin-bottom:24px;"><i class="fas fa-dumbbell" style="color:#ccff00; font-size:20px;"></i></div>
+        <div class="pill-tag mb-4">Instalaciones</div>
+        <h3 style="font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:0.03em; margin-bottom:12px; color:#fff;">Instalaciones<br/>de Nivel.</h3>
+        <p class="text-white/45 text-sm leading-relaxed" style="font-weight:300;">Espacios impecables, máquinas de última generación y zonas totalmente renovadas para cualquier tipo de entrenamiento.</p>
+      </div>
+      <div class="card-dark p-10 reveal reveal-delay-2">
+        <div style="width:52px; height:52px; background:rgba(204,255,0,0.08); display:flex; align-items:center; justify-content:center; margin-bottom:24px;"><i class="fas fa-clipboard-list" style="color:#ccff00; font-size:20px;"></i></div>
+        <div class="pill-tag mb-4">Seguimiento</div>
+        <h3 style="font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:0.03em; margin-bottom:12px; color:#fff;">Atención<br/>Personalizada.</h3>
+        <p class="text-white/45 text-sm leading-relaxed" style="font-weight:300;">Seguimiento constante, corrección de posturas y rutinas a medida (incluyendo dietas). Nunca entrenarás a ciegas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="disciplinas" class="py-28" style="background:#060606;">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      <div><div class="reveal section-tag mb-6">Disciplinas</div><h2 class="reveal" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,6vw,80px); line-height:0.92; letter-spacing:0.01em;">ENTRENA A<br/><span style="color:#ccff00;">TU MANERA.</span></h2></div>
+      <p class="reveal text-white/40 max-w-xs text-sm leading-relaxed" style="font-weight:300;">Desde la intensidad del cronómetro hasta el control absoluto de tu postura.</p>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div class="disc-card reveal">
+        <div class="disc-card-img" style="background-image:url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80');"></div><div class="disc-card-overlay"></div>
+        <div class="disc-card-content"><div class="pill-tag mb-3">01</div><h3 style="font-family:'Bebas Neue',sans-serif; font-size:32px; color:#ccff00; letter-spacing:0.03em; line-height:1; margin-bottom:8px;">CrossFit</h3><div class="disc-card-desc">Entrenamientos funcionales de alta intensidad adaptados a tu nivel. Sudarás, te superarás, pero nunca estarás solo.</div><div style="width:30px; height:2px; background:#ccff00; margin-top:12px;"></div></div>
+      </div>
+      <div class="disc-card reveal reveal-delay-1">
+        <div class="disc-card-img" style="background-image:url('https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&q=80');"></div><div class="disc-card-overlay"></div>
+        <div class="disc-card-content"><div class="pill-tag mb-3">02</div><h3 style="font-family:'Bebas Neue',sans-serif; font-size:32px; color:#ccff00; letter-spacing:0.03em; line-height:1; margin-bottom:8px;">HYROX</h3><div class="disc-card-desc">La competición de fitness que está arrasando. Running + workouts funcionales para llevar tu resistencia al límite.</div><div style="width:30px; height:2px; background:#ccff00; margin-top:12px;"></div></div>
+      </div>
+      <div class="disc-card reveal reveal-delay-2">
+        <div class="disc-card-img" style="background-image:url('https://images.unsplash.com/photo-1555597673-b21d5c935865?w=600&q=80');"></div><div class="disc-card-overlay"></div>
+        <div class="disc-card-content"><div class="pill-tag mb-3">03</div><h3 style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#ccff00; letter-spacing:0.03em; line-height:1; margin-bottom:8px;">BJJ &amp; Taekwondo</h3><div class="disc-card-desc">Técnica, respeto y valores de las artes marciales para peques y adultos. Grandes profesores, comunidad inigualable.</div><div style="width:30px; height:2px; background:#ccff00; margin-top:12px;"></div></div>
+      </div>
+      <div class="disc-card reveal reveal-delay-3">
+        <div class="disc-card-img" style="background-image:url('https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80');"></div><div class="disc-card-overlay"></div>
+        <div class="disc-card-content"><div class="pill-tag mb-3">04</div><h3 style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:#ccff00; letter-spacing:0.03em; line-height:1; margin-bottom:8px;">Pilates &amp; Fitness</h3><div class="disc-card-desc">Tonifica, cuida tu postura y accede a la sala libre con seguimiento personalizado para aprender a moverte bien.</div><div style="width:30px; height:2px; background:#ccff00; margin-top:12px;"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="entrenamientos" class="py-28 stripe-bg" style="background-color:#0d0d0d;">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      <div><div class="reveal section-tag mb-6">Programas</div><h2 class="reveal" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,6vw,80px); line-height:0.92; letter-spacing:0.01em;">TU PLAN DE<br/><span style="color:#ccff00;">ENTRENAMIENTO.</span></h2></div>
+      <p class="reveal text-white/40 max-w-xs text-sm leading-relaxed" style="font-weight:300;">Cada persona es diferente. Por eso tenemos programas adaptados a cada nivel y objetivo.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 mb-8">
+      <div class="card-dark p-8 reveal" style="border-top: 3px solid rgba(204,255,0,0.4);">
+        <div class="pill-tag mb-5">Nivel 01</div><h3 style="font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:0.03em; color:#fff; line-height:1; margin-bottom:12px;">EMPIEZA<br/>DE CERO</h3>
+        <p class="text-white/45 text-sm leading-relaxed mb-6" style="font-weight:300;">Perfecto si nunca has pisado un gimnasio o llevas tiempo parado. Aprenderás los movimientos básicos, ganarás confianza y empezarás a ver resultados desde la primera semana.</p>
+        <ul class="flex flex-col gap-3 mb-8">
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Introducción a la sala de fitness</li>
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Corrección postural desde el día 1</li>
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Rutina personalizada + dieta orientativa</li>
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Seguimiento semanal con tu coach</li>
+        </ul>
+        <a href="#contacto" class="btn-secondary inline-block no-underline" style="font-size:12px; padding:11px 24px;">Quiero empezar</a>
+      </div>
+
+      <div class="card-dark p-8 reveal reveal-delay-1" style="border-top: 3px solid #ccff00; background: linear-gradient(180deg, rgba(204,255,0,0.04) 0%, transparent 40%);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;"><div class="pill-tag">Nivel 02</div><div style="background:#ccff00; color:#060606; font-size:9px; font-weight:700; letter-spacing:0.15em; padding:3px 10px; text-transform:uppercase;">Más popular</div></div>
+        <h3 style="font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:0.03em; color:#ccff00; line-height:1; margin-bottom:12px; text-shadow:0 0 20px rgba(204,255,0,0.3);">CROSSFIT<br/>&amp; FUERZA</h3>
+        <p class="text-white/45 text-sm leading-relaxed mb-6" style="font-weight:300;">El programa estrella de Janes Sport. Combina entrenamiento funcional de alta intensidad con trabajo de fuerza progresivo. Te llevará al siguiente nivel sin importar tu punto de partida.</p>
+        <ul class="flex flex-col gap-3 mb-8">
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>WODs diarios + programación de fuerza</li>
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Clases en grupo con ambiente inigualable</li>
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Adaptado a todos los niveles</li>
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Coach Salva a tu lado en cada sesión</li>
+        </ul>
+        <a href="#contacto" class="btn-primary inline-block no-underline" style="font-size:12px; padding:12px 24px;">Unirme al box</a>
+      </div>
+
+      <div class="card-dark p-8 reveal reveal-delay-2" style="border-top: 3px solid rgba(204,255,0,0.4);">
+        <div class="pill-tag mb-5">Nivel 03</div><h3 style="font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:0.03em; color:#fff; line-height:1; margin-bottom:12px;">HYROX<br/>COMPETICIÓN</h3>
+        <p class="text-white/45 text-sm leading-relaxed mb-6" style="font-weight:300;">Para los que quieren ir más allá. Preparación específica para la competición HYROX: el formato de fitness race más exigente del mundo. Running + workouts funcionales al límite.</p>
+        <ul class="flex flex-col gap-3 mb-8">
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Plan específico para carrera + ejercicios</li>
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Simulacros de prueba HYROX</li>
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Nutrición deportiva orientada al rendimiento</li>
+          <li class="flex items-start gap-3 text-sm text-white/60"><i class="fas fa-check" style="color:#ccff00; margin-top:3px; flex-shrink:0; font-size:11px;"></i>Comunidad de atletas que se superan</li>
+        </ul>
+        <a href="#contacto" class="btn-secondary inline-block no-underline" style="font-size:12px; padding:11px 24px;">Prepararme para HYROX</a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-px reveal" style="background:rgba(255,255,255,0.05);">
+      <div style="background:#111; padding:24px 20px; text-align:center;"><i class="fas fa-leaf" style="color:#ccff00; font-size:22px; margin-bottom:12px; display:block;"></i><div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.05em; margin-bottom:6px;">Pilates</div><div style="font-size:11px; color:rgba(255,255,255,0.35);">Salud articular &amp; tonificación</div></div>
+      <div style="background:#111; padding:24px 20px; text-align:center;"><i class="fas fa-fist-raised" style="color:#ccff00; font-size:22px; margin-bottom:12px; display:block;"></i><div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.05em; margin-bottom:6px;">BJJ</div><div style="font-size:11px; color:rgba(255,255,255,0.35);">Brazilian Jiu Jitsu para todos</div></div>
+      <div style="background:#111; padding:24px 20px; text-align:center;"><i class="fas fa-child" style="color:#ccff00; font-size:22px; margin-bottom:12px; display:block;"></i><div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.05em; margin-bottom:6px;">Taekwondo</div><div style="font-size:11px; color:rgba(255,255,255,0.35);">Peques y adultos</div></div>
+      <div style="background:#111; padding:24px 20px; text-align:center;"><i class="fas fa-user-friends" style="color:#ccff00; font-size:22px; margin-bottom:12px; display:block;"></i><div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.05em; margin-bottom:6px;">Personal</div><div style="font-size:11px; color:rgba(255,255,255,0.35);">Entrenamiento 1 a 1 con coach</div></div>
+    </div>
+
+    <div class="reveal mt-10 flex flex-col md:flex-row items-center justify-between gap-6 p-6" style="border:1px solid rgba(204,255,0,0.15); background:rgba(204,255,0,0.02);">
+      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.05em; margin-bottom:4px;">¿No sabes cuál es el tuyo?</div><div style="font-size:13px; color:rgba(255,255,255,0.4); font-weight:300;">Cuéntanos tus objetivos y te asesoramos gratis. Sin compromiso.</div></div>
+      <a href="https://wa.me/34931757092" target="_blank" class="btn-primary inline-flex items-center gap-2 no-underline flex-shrink-0"><i class="fab fa-whatsapp"></i> Asesoramiento gratis</a>
+    </div>
+  </div>
+</section>
+
+<section id="equipo" class="py-28" style="background:#0d0d0d;">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <div class="reveal section-tag mb-6">El equipo</div>
+        <h2 class="reveal" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,5.5vw,72px); line-height:0.92; letter-spacing:0.01em; margin-bottom:20px;">ENTRENA CON LOS<br/><span style="color:#ccff00;">MEJORES DEL</span><br/>MARESME.</h2>
+        <p class="reveal text-white/45 text-sm leading-relaxed mb-10 max-w-md" style="font-weight:300;">El éxito de tu entrenamiento depende de quién te acompañe. Nuestro equipo tiene la experiencia, el método y el trato humano que marca la diferencia.</p>
+        <div class="flex flex-col gap-3">
+          <div class="team-card reveal"><div class="team-icon"><i class="fas fa-bolt"></i></div><div><div class="text-white font-semibold text-sm mb-1">Estela Rojas</div><div class="text-white/45 text-xs leading-relaxed" style="font-weight:300;">Diseña tus entrenos a medida, dinámicos y cañeros para trabajar las zonas exactas que deseas.</div></div></div>
+          <div class="team-card reveal reveal-delay-1"><div class="team-icon"><i class="fas fa-dumbbell"></i></div><div><div class="text-white font-semibold text-sm mb-1">Salva</div><div class="text-white/45 text-xs leading-relaxed" style="font-weight:300;">Te llevará al siguiente nivel en fuerza, CrossFit y Hyrox, siempre cuidando la técnica y la motivación.</div></div></div>
+          <div class="team-card reveal reveal-delay-2"><div class="team-icon"><i class="fas fa-leaf"></i></div><div><div class="text-white font-semibold text-sm mb-1">Nuria</div><div class="text-white/45 text-xs leading-relaxed" style="font-weight:300;">Imparte excelentes clases de Pilates para mantener tu salud articular y corporal al máximo.</div></div></div>
+          <div class="team-card reveal reveal-delay-3"><div class="team-icon"><i class="fas fa-fist-raised"></i></div><div><div class="text-white font-semibold text-sm mb-1">Expertos en Artes Marciales</div><div class="text-white/45 text-xs leading-relaxed" style="font-weight:300;">Grandes profesores que cuidan el ambiente de equipo y el entrenamiento personalizado.</div></div></div>
+        </div>
+      </div>
+      <div class="reveal relative">
+        <div class="relative" style="aspect-ratio:4/5;">
+          <div style="position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=80') center/cover; border: 1px solid rgba(204,255,0,0.2); box-shadow: 0 0 60px rgba(204,255,0,0.08);"></div>
+          <div style="position:absolute; inset:0; background:linear-gradient(to bottom, transparent 40%, rgba(13,13,13,0.8) 100%);"></div>
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:28px;">
+            <div class="neon-border inline-block px-4 py-2" style="background:rgba(0,0,0,0.7); backdrop-filter:blur(10px);"><div style="font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.15em; color:#ccff00;">EL MEJOR GIM DEL MARESME</div></div>
+          </div>
+          <div style="position:absolute; top:-12px; right:-12px; width:60px; height:60px; border-top:2px solid #ccff00; border-right:2px solid #ccff00; opacity:0.5;"></div><div style="position:absolute; bottom:-12px; left:-12px; width:60px; height:60px; border-bottom:2px solid #ccff00; border-left:2px solid #ccff00; opacity:0.5;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="opiniones" class="py-28" style="background:#060606;">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <div class="reveal section-tag mb-6 justify-center" style="display:flex;">Lo que dicen</div>
+      <h2 class="reveal" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,6vw,80px); line-height:0.92; letter-spacing:0.01em;">LO QUE DICE<br/><span style="color:#ccff00;">NUESTRA FAMILIA.</span></h2>
+      <p class="reveal text-white/40 mt-4 text-sm" style="font-weight:300;">No lo decimos nosotros, lo dicen ellos. +80 reseñas reales en Google.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="testimonial-card reveal">
+        <div class="flex gap-0.5 mb-6"><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i></div>
+        <p class="text-white/60 text-sm leading-relaxed mb-8 italic" style="font-weight:300;">"Empecé en Janes para tener un hábito y dejar de ser tan sedentaria. A día de hoy se ha vuelto mi lugar seguro, donde nadie te juzga y todo el mundo te ayuda."</p>
+        <div class="flex items-center gap-3" style="border-top:1px solid rgba(255,255,255,0.07); padding-top:20px;"><div style="width:36px; height:36px; background:rgba(204,255,0,0.1); border:1px solid rgba(204,255,0,0.2); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:#ccff00; font-family:'Poppins',sans-serif;">PD</div><div><div class="text-white text-sm font-semibold">Paula De la Rosa</div><div class="text-white/35 text-xs">Miembro activa</div></div></div>
+      </div>
+      <div class="testimonial-card featured reveal reveal-delay-1">
+        <div class="flex items-start justify-between mb-6"><div class="flex gap-0.5"><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i></div><div class="pill-tag">Destacada</div></div>
+        <p class="text-white/75 text-sm leading-relaxed mb-8 italic" style="font-weight:300;">"Sin duda el mejor Gim de Arenys: buenas máquinas, buen ambiente, trato muy cercano, limpio, clases guiadas y personales. Gim muy recomendable."</p>
+        <div class="flex items-center gap-3" style="border-top:1px solid rgba(204,255,0,0.15); padding-top:20px;"><div style="width:36px; height:36px; background:rgba(204,255,0,0.1); border:1px solid rgba(204,255,0,0.4); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:#ccff00; font-family:'Poppins',sans-serif;">TC</div><div><div class="text-white text-sm font-semibold">Transcarrasco</div><div class="text-white/35 text-xs">Google Review</div></div></div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="flex gap-0.5 mb-6"><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i><i class="fas fa-star text-xs" style="color:#ccff00;"></i></div>
+        <p class="text-white/60 text-sm leading-relaxed mb-8 italic" style="font-weight:300;">"Tienen a una de las mejores coaches del Maresme (Estela Rojas), te orienta y diseña tus entrenos a medida. Sin duda acogedor y familiar."</p>
+        <div class="flex items-center gap-3" style="border-top:1px solid rgba(255,255,255,0.07); padding-top:20px;"><div style="width:36px; height:36px; background:rgba(204,255,0,0.1); border:1px solid rgba(204,255,0,0.2); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:#ccff00; font-family:'Poppins',sans-serif;">AC</div><div><div class="text-white text-sm font-semibold">Aura Cano</div><div class="text-white/35 text-xs">Google Review</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="py-28 stripe-bg" style="background-color:#0d0d0d;">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <div class="reveal section-tag mb-6 justify-center" style="display:flex;">¿Listo?</div>
+      <h2 class="reveal" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,6vw,80px); line-height:0.92; letter-spacing:0.01em;">¿LISTO PARA<br/><span style="color:#ccff00;">DEJAR LAS</span><br/>EXCUSAS?</h2>
+      <p class="reveal text-white/40 mt-6 max-w-xl mx-auto text-sm leading-relaxed" style="font-weight:300;">Únete hoy mismo a Janes Sport Gym. Ya sea para un WOD de CrossFit, prepararte para Hyrox, o empezar de cero en la sala de máquinas.</p>
+    </div>
+    <div class="max-w-4xl mx-auto contact-box reveal">
+      <div class="grid md:grid-cols-2">
+        <div class="p-10 border-b md:border-b-0 md:border-r" style="border-color:rgba(204,255,0,0.1);">
+          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.1em; color:#ccff00; margin-bottom:28px;">DÓNDE ENCONTRARNOS</h3>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-start gap-4"><div style="width:36px; height:36px; background:rgba(204,255,0,0.08); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;"><i class="fas fa-map-marker-alt" style="color:#ccff00; font-size:14px;"></i></div><div><div class="text-white/35 text-xs uppercase mb-1" style="letter-spacing:0.1em;">Dirección</div><div class="text-white text-sm">Carrer d'Avall, 14<br/>08350 Arenys de Mar</div></div></div>
+            <div class="flex items-start gap-4"><div style="width:36px; height:36px; background:rgba(204,255,0,0.08); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i class="fas fa-phone" style="color:#ccff00; font-size:14px;"></i></div><div><div class="text-white/35 text-xs uppercase mb-1" style="letter-spacing:0.1em;">Teléfono</div><a href="tel:+34931757092" class="text-white text-sm no-underline hover:text-neon transition-colors">931 75 70 92</a></div></div>
+            <div class="flex items-start gap-4"><div style="width:36px; height:36px; background:rgba(204,255,0,0.08); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i class="fab fa-whatsapp" style="color:#25D366; font-size:16px;"></i></div><div><div class="text-white/35 text-xs uppercase mb-1" style="letter-spacing:0.1em;">WhatsApp</div><a href="https://wa.me/34931757092" target="_blank" class="text-white text-sm no-underline hover:text-green-400 transition-colors">Escríbenos por WhatsApp</a></div></div>
+            <div class="flex items-start gap-4"><div style="width:36px; height:36px; background:rgba(204,255,0,0.08); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i class="fas fa-clock" style="color:#ccff00; font-size:14px;"></i></div><div><div class="text-white/35 text-xs uppercase mb-1" style="letter-spacing:0.1em;">Horario</div><div class="text-white text-sm">Abierto desde las 7:00 AM</div></div></div>
+          </div>
+        </div>
+        <div class="p-10 flex flex-col justify-center gap-4">
+          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.1em; margin-bottom:8px;">EMPIEZA HOY</h3>
+          <p class="text-white/40 text-sm leading-relaxed mb-4" style="font-weight:300;">¿Tienes dudas? Llámanos o escríbenos. Pregunta por nuestras cuotas familiares y clases de prueba.</p>
+          <a href="tel:+34931757092" class="btn-primary flex items-center justify-center gap-3 no-underline text-center"><i class="fas fa-phone"></i> Llámanos ahora</a>
+          <a href="https://wa.me/34931757092" target="_blank" class="flex items-center justify-center gap-3 no-underline text-center font-semibold text-sm" style="background:#25D366; color:#fff; padding:14px 32px; letter-spacing:0.08em; text-transform:uppercase; transition:all 0.3s ease;" onmouseover="this.style.background='#20bd5c'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#25D366'; this.style.transform='translateY(0)'"><i class="fab fa-whatsapp text-lg"></i> WhatsApp — Día Gratis</a>
+          <p class="text-white/25 text-xs text-center" style="letter-spacing:0.03em;">¡Sin compromiso ni permanencia!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#060606; border-top:1px solid rgba(255,255,255,0.05); padding: 32px 24px;">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    
+    <a href="#inicio" aria-label="Volver arriba">
+      <img src="Gemini_Generated_Image_vn4bwavn4bwavn4b.png" alt="Janes Sport Gym" class="footer-logo" loading="lazy"/>
+    </a>
+
+    <p style="color:rgba(255,255,255,0.2); font-size:12px; letter-spacing:0.05em;">© 2026 Janes Sport Gym. Todos los derechos reservados. · Arenys de Mar</p>
+    <div class="flex items-center gap-5">
+      <a href="https://wa.me/34931757092" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3); font-size:16px; transition:color 0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='rgba(255,255,255,0.3)'"><i class="fab fa-whatsapp"></i></a>
+      <a href="#" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3); font-size:16px; transition:color 0.3s;" onmouseover="this.style.color='#ccff00'" onmouseout="this.style.color='rgba(255,255,255,0.3)'"><i class="fab fa-instagram"></i></a>
+      <a href="#" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3); font-size:16px; transition:color 0.3s;" onmouseover="this.style.color='#ccff00'" onmouseout="this.style.color='rgba(255,255,255,0.3)'"><i class="fab fa-facebook"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+if (dot && ring) {
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
+  function animRing() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a, button, .disc-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.width = '52px'; ring.style.height = '52px'; ring.style.borderColor = 'rgba(204,255,0,0.9)'; dot.style.transform = 'translate(-50%,-50%) scale(2)'; });
+    el.addEventListener('mouseleave', () => { ring.style.width = '36px'; ring.style.height = '36px'; ring.style.borderColor = 'rgba(204,255,0,0.6)'; dot.style.transform = 'translate(-50%,-50%) scale(1)'; });
+  });
+}
+
+const menuToggle = document.getElementById('menuToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+const menuIcon = document.getElementById('menuIcon');
+if (menuToggle) {
+  menuToggle.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    menuIcon.className = mobileMenu.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+    menuIcon.className = 'fas fa-bars';
+  }));
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const style = document.createElement('style');
+style.textContent = `@keyframes scrollPulse { 0%,100%{opacity:0.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.1)} }`;
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>
